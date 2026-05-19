@@ -1,0 +1,15 @@
+# StreamMind — Dependencias para el módulo STT
+# Instalar con: pip install -r requirements_stt.txt
+
+# Motor de transcripción (descarga modelos automáticamente)
+openai-whisper
+
+# Captura de audio del micrófono (más estable que PyAudio en Windows)
+sounddevice
+
+# Álgebra numérica (ya incluida normalmente, pero explícita por si acaso)
+numpy
+
+# Nota: sounddevice requiere PortAudio.
+# En Windows se instala automáticamente con sounddevice vía pip.
+# Si tienes problemas, instala primero: pip install sounddevice --pre
