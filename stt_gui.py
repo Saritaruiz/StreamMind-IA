@@ -30,6 +30,11 @@ from faster_whisper import WhisperModel
 import torch
 import customtkinter as ctk
 
+# Importar RAG y LLM avanzados
+from stream_rag_advanced import AdvancedStreamRAG
+from stream_llm_advanced import AdvancedMultiBotGenerator
+from stream_chat_ui import ChatPanel
+
 # ─── Configuración Estética Estilo Apple ──────────────────────────────────────
 
 ctk.set_appearance_mode("Dark")
@@ -51,142 +56,21 @@ COLOR_CRITI = "#30d158"           # Verde brillante para CritiBot
 COLOR_LURKER = "#bf5af2"          # Morado brillante para LurkerBot
 
 
-# ─── STAGE 2: Memoria Contextual del Stream (RAG) ─────────────────────────────
-
-class StreamContextRAG:
-    """
-    Etapa 2 — Memoria contextual (RAG)
-    Para ser completado por el equipo de desarrollo:
-    - Integrar sentence-transformers para embeddings.
-    - Configurar y persistir la base de datos vectorial FAISS.
-    """
-    def __init__(self):
-        self.documents = []
-        self.is_ready = False
-        
-    def initialize(self):
-        """Inicializa la base vectorial y embeddings (Integrar aquí)."""
-        self.is_ready = True
-        return True
-        
-    def add_document(self, text):
-        """Guarda la transcripción del streamer en la memoria del RAG."""
-        self.documents.append(text)
-        
-    def retrieve_context(self, query, k=3):
-        """Recupera los fragmentos del stream más relevantes respecto a la query."""
-        if not self.documents:
-            return ""
-        # Devolvemos los últimos fragmentos como contexto virtual
-        recent_docs = self.documents[-k:]
-        return "\n".join(recent_docs)
+# ─── STAGE 2: Memoria Contextual del Stream (RAG) — AVANZADO ──────────────────
+# Ahora usamos AdvancedStreamRAG con FAISS + sentence-transformers
+# (Ver stream_rag_advanced.py para detalles)
 
 
 # ─── STAGE 3: Generación Multi-Persona con un solo LLM (NVIDIA NIM) ───────────
 
-class MultiBotGenerator:
-    """
-    Etapa 3 — Generación de comentarios con NVIDIA NIM (Gemma 3)
-    Realiza una llamada única al endpoint de NVIDIA NIM pasando un system prompt
-    estructurado para obtener 3 personalidades simuladas en un único formato JSON.
-    """
-    def __init__(self):
-        self.api_key = ""
-        self.model_name = "google/gemma-3n-e2b-it"
-        self.temperature = 0.7
-        self.connected = False
-        
-    def connect(self, api_key):
-        """Establece la API Key de NVIDIA NIM."""
-        self.api_key = api_key
-        if api_key:
-            self.connected = True
-            return True
-        return False
-        
-    def generate_comments(self, streamer_text, context=""):
-        """
-        Adopta 3 personalidades distintas y devuelve las respuestas en una sola inferencia
-        utilizando la API oficial de NVIDIA NIM con el modelo Gemma 3.
-        """
-        if not self.connected or not self.api_key:
-            raise RuntimeError("API Key de NVIDIA NIM no configurada. Introdúcela en el menú lateral.")
-            
-        system_prompt = """Eres el motor de simulación del chat de un directo (Twitch/YouTube Live).
-Tu tarea es generar la reacción de tres espectadores virtuales basándote en la última frase del streamer y el contexto del stream.
+# ─── STAGE 3: Generación Multi-Persona con LLM Avanzado ─────────────────────
 
-Debes adoptar simultáneamente tres personalidades distintas:
-1. "HypeBot": Viewer entusiasta y fanboy, usa jerga de gaming/streaming (ej: "¡Vamooos!", "🔥", "hype", "poggers", "lol"), reacciona de forma exagerada, escribe con mayúsculas y exclamaciones.
-2. "CritiBot": Viewer analítico y reflexivo. Hace preguntas inteligentes, comentarios constructivos o cuestiona con respeto las decisiones del streamer.
-3. "LurkerBot": Viewer silencioso o cínico. Interviene muy poco, usa humor seco, ironía, referencias a memes o simplemente caritas (ej: "xd", "f", "👀", "jajaja").
-
-Instrucciones de formato:
-Debes responder ÚNICAMENTE con un objeto JSON válido que contenga exactamente tres claves: "HypeBot", "CritiBot" y "LurkerBot".
-No agregues formato de código markdown (no uses ```json ni ```), no agregues introducciones ni explicaciones fuera del JSON. Escribe en español."""
-
-        user_prompt = f"""Contexto histórico del directo:
-{context}
-
-Lo que acaba de decir el streamer en vivo:
-"{streamer_text}"
-
-Genera las reacciones de los tres bots en formato JSON:"""
-
-        url = "https://integrate.api.nvidia.com/v1/chat/completions"
-        headers = {
-            "Authorization": f"Bearer {self.api_key}",
-            "Content-Type": "application/json"
-        }
-        payload = {
-            "model": self.model_name,
-            "messages": [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt}
-            ],
-            "temperature": self.temperature,
-            "max_tokens": 1024
-        }
-        
-        data = json.dumps(payload).encode("utf-8")
-        req = urllib.request.Request(url, data=data, headers=headers, method="POST")
-        
-        try:
-            with urllib.request.urlopen(req, timeout=20) as response:
-                res_body = response.read().decode("utf-8")
-                res_json = json.loads(res_body)
-                content = res_json["choices"][0]["message"]["content"]
-                
-                # Sanitizar código markdown del LLM si existiera
-                sanitized = content.strip()
-                if sanitized.startswith("```json"):
-                    sanitized = sanitized[7:]
-                elif sanitized.startswith("```"):
-                    sanitized = sanitized[3:]
-                if sanitized.endswith("```"):
-                    sanitized = sanitized[:-3]
-                sanitized = sanitized.strip()
-                
-                # Intentar parsear el JSON
-                try:
-                    return json.loads(sanitized)
-                except Exception as json_err:
-                    # En caso de error de formato, estructurar un fallback amigable
-                    return {
-                        "HypeBot": "¡VAMOOOS! 🔥 (Error al parsear el JSON de salida)",
-                        "CritiBot": f"Respuesta cruda del modelo: {content[:120]}...",
-                        "LurkerBot": "F por el formato del bot xd"
-                    }
-        except urllib.error.HTTPError as e:
-            err_content = e.read().decode("utf-8")
-            try:
-                err_json = json.loads(err_content)
-                err_msg = err_json.get("error", {}).get("message", err_content)
-            except:
-                err_msg = err_content
-            raise RuntimeError(f"Error de NVIDIA NIM ({e.code}): {err_msg}")
-        except Exception as e:
-            raise RuntimeError(f"Fallo al conectar con NVIDIA NIM: {str(e)}")
-
+# Reemplazado por: AdvancedMultiBotGenerator (Ver stream_llm_advanced.py para detalles)
+# Mejoras implementadas:
+# - Prompts refinados por categoría de stream
+# - Sistema de delays realista (2-5s entre bots)
+# - Manejo robusto de errores y reintentos
+# - Estadísticas de uso
 
 # ─── STAGE 1: Motor STT (Faster-Whisper Engine) ───────────────────────────────
 
@@ -204,8 +88,8 @@ class WhisperSTTEngine:
         self.device_index = None
         
         # Instancias de componentes
-        self.rag = StreamContextRAG()
-        self.generator = MultiBotGenerator()
+        self.rag = None  # Se inicializa después de cargar el modelo
+        self.generator = AdvancedMultiBotGenerator()  # LLM avanzado con categorías y delays
         
         # Estado
         self.model = None
@@ -232,8 +116,11 @@ class WhisperSTTEngine:
             self.model_size = model_size
             compute_type = "float16" if self.device == "cuda" else "int8"
             self.model = WhisperModel(self.model_size, device=self.device, compute_type=compute_type)
-            self.rag.initialize()
-            self.status_queue.put(("ready", f"Modelo '{model_size}' listo ({self.device.upper()})"))
+            
+            # Inicializar RAG avanzado con FAISS
+            self.status_queue.put(("loading", "Inicializando Sistema RAG avanzado con FAISS..."))
+            self.rag = AdvancedStreamRAG()
+            self.status_queue.put(("ready", f"Modelo '{model_size}' listo ({self.device.upper()}) + RAG FAISS ✓"))
         except Exception as e:
             self.status_queue.put(("error", f"Error al cargar modelo: {str(e)}"))
 
@@ -432,16 +319,27 @@ class WhisperSTTEngine:
                 # 1. Enviar transcripción a la UI
                 self.transcription_queue.put(("final", (text, timestamp)))
                 
-                # 2. RAG: Guardar en la base vectorial
-                self.rag.add_document(text)
+                # 2. RAG: Guardar en la base vectorial con metadata
+                self.rag.add_document(
+                    text,
+                    metadata={"timestamp": timestamp, "type": "streamer_transcription"}
+                )
                 
-                # 3. RAG: Buscar contexto
-                context = self.rag.retrieve_context(text, k=3)
+                # 3. RAG: Buscar contexto (retorna dict con similitudes)
+                context_data = self.rag.retrieve_context(text, top_k=3, include_metadata=True)
+                context = context_data["context"]  # Obtener solo el texto del contexto
                 self.transcription_queue.put(("rag_log", (text, context)))
                 
-                # 4. LLM: Generar comentarios en NVIDIA NIM
+                # 4. LLM: Generar comentarios con contexto y categoría
                 try:
-                    comments = self.generator.generate_comments(text, context)
+                    # Valores predeterminados (pueden ser configurables después)
+                    stream_category = "gaming"  # TODO: hacer configurable en la GUI
+                    comments = self.generator.generate_comments(
+                        text, 
+                        context,
+                        stream_category=stream_category,
+                        include_delays=True  # Añade delays realistas entre bots
+                    )
                     self.transcription_queue.put(("comments", comments))
                 except Exception as llm_err:
                     self.status_queue.put(("error", f"LLM Error: {str(llm_err)}"))
@@ -974,38 +872,23 @@ class StreamMindSTTApp(ctk.CTk):
         self.txt_stt.insert("1.0", "(Esperando inicio de grabación...)\n")
         self.txt_stt.configure(state="disabled")
 
-        # 💬 TARJETA DEL CHAT
+        # 💬 TARJETA DEL CHAT MEJORADO
         self.card_chat = ctk.CTkFrame(self.split_frame, fg_color=COLOR_BG_CARD, border_width=1, border_color=COLOR_BORDER, corner_radius=12)
         self.card_chat.grid_rowconfigure(1, weight=1)
         self.card_chat.grid_columnconfigure(0, weight=1)
 
         self.lbl_chat_title = ctk.CTkLabel(
             self.card_chat, 
-            text="💬 Chat de Directo (Visualizador de Bots)", 
+            text="💬 Chat en Vivo (Bots con Delays)", 
             font=ctk.CTkFont(family="SF Pro Text", size=14, weight="bold"),
             text_color=COLOR_TEXT_PRIMARY
         )
         self.lbl_chat_title.grid(row=0, column=0, padx=16, pady=(14, 8), sticky="w")
 
-        self.txt_chat = ctk.CTkTextbox(
-            self.card_chat, 
-            fg_color=COLOR_BG_INNER,
-            border_width=0,
-            corner_radius=8,
-            font=ctk.CTkFont(family="Consolas", size=13),
-            wrap="word",
-            border_spacing=10
-        )
-        self.txt_chat.grid(row=1, column=0, sticky="nsew", padx=16, pady=(0, 16))
-        
-        # Tags de colores
-        self.txt_chat.tag_config("timestamp", foreground=COLOR_TEXT_SECONDARY)
-        self.txt_chat.tag_config("hype", foreground=COLOR_HYPE)
-        self.txt_chat.tag_config("criti", foreground=COLOR_CRITI)
-        self.txt_chat.tag_config("lurker", foreground=COLOR_LURKER)
-        
-        self.txt_chat.insert("1.0", "[Sistema]: Chat inactivo. Enciende los bots para simular espectadores.\n\n")
-        self.txt_chat.configure(state="disabled")
+        # Panel de chat mejorado con colores y animaciones
+        self.chat_panel = ChatPanel(self.card_chat, height=350)
+        self.chat_panel.grid(row=1, column=0, sticky="nsew", padx=16, pady=(0, 16))
+        self.chat_panel.add_system_message("Chat inicializado. Presiona Grabar para comenzar.")
 
         # ── TARJETA DEL LOG DEL CONTEXTO RAG (FILA 2) ──
         self.card_rag = ctk.CTkFrame(self.main_panel, fg_color=COLOR_BG_CARD, border_width=1, border_color=COLOR_BORDER, corner_radius=12)
@@ -1049,8 +932,12 @@ class StreamMindSTTApp(ctk.CTk):
         connected = self.engine.generator.connect(key)
         if connected:
             self.led_llm.configure(fg_color="#30d158")
+            if hasattr(self, 'chat_panel'):
+                self.chat_panel.add_system_message("API Key configurada - Bots habilitados")
         else:
             self.led_llm.configure(fg_color="#8e8e93")
+            if hasattr(self, 'chat_panel'):
+                self.chat_panel.add_system_message("API Key requerida para usar los bots")
 
     def change_microphone(self, display_name):
         """Actualiza el micrófono activo seleccionado."""
@@ -1309,26 +1196,28 @@ class StreamMindSTTApp(ctk.CTk):
     # ── Simulación de Chat con Delays Artificiales (Stage 3 + 4) ──
 
     def schedule_comments(self, comments):
-        """Planifica las apariciones de los bots en el chat con tiempos variables."""
-        delay_hype = random.randint(1500, 3500)
-        delay_criti = random.randint(4500, 7500)
-        delay_lurker = random.randint(8500, 12000)
-
-        self.after(delay_hype, lambda: self.post_to_chat("HypeBot", comments["HypeBot"], "hype"))
-        self.after(delay_criti, lambda: self.post_to_chat("CritiBot", comments["CritiBot"], "criti"))
-        self.after(delay_lurker, lambda: self.post_to_chat("LurkerBot", comments["LurkerBot"], "lurker"))
-
-    def post_to_chat(self, bot_name, message, tag_name):
-        """Inserta un comentario con color e indicativo en el chat box."""
-        self.txt_chat.configure(state="normal")
+        """Planifica las apariciones de los bots en el chat usando delays del LLM."""
+        # Usar delays del LLM si existen, sino usar defaults
+        delays = comments.get("delays", {
+            "HypeBot": 2,
+            "CritiBot": 3,
+            "LurkerBot": 4
+        })
         
-        timestamp = datetime.now().strftime("%H:%M:%S")
-        self.txt_chat.insert("end", f"[{timestamp}] ", "timestamp")
-        self.txt_chat.insert("end", f"{bot_name}: ", tag_name)
-        self.txt_chat.insert("end", f"{message}\n\n")
-        
-        self.txt_chat.configure(state="disabled")
-        self.txt_chat.see("end")
+        # Convertir segundos a milisegundos para self.after()
+        delay_hype_ms = delays.get("HypeBot", 2) * 1000
+        delay_criti_ms = delays.get("CritiBot", 3) * 1000
+        delay_lurker_ms = delays.get("LurkerBot", 4) * 1000
+
+        # Programar apariciones con animación de delays
+        self.after(delay_hype_ms, lambda: self.post_to_chat("HypeBot", comments["HypeBot"], delays["HypeBot"]))
+        self.after(delay_criti_ms, lambda: self.post_to_chat("CritiBot", comments["CritiBot"], delays["CritiBot"]))
+        self.after(delay_lurker_ms, lambda: self.post_to_chat("LurkerBot", comments["LurkerBot"], delays["LurkerBot"]))
+
+    def post_to_chat(self, bot_name, message, delay=0):
+        """Inserta un comentario en el chat con animación de delays."""
+        # Usar el nuevo ChatPanel mejorado
+        self.chat_panel.add_message(bot_name, message, delay=delay)
 
     # ── Manejo de Transcripciones y RAG logs ──
 
@@ -1369,10 +1258,8 @@ class StreamMindSTTApp(ctk.CTk):
         self.txt_stt.insert("1.0", "(Esperando grabación...)\n")
         self.txt_stt.configure(state="disabled")
         
-        self.txt_chat.configure(state="normal")
-        self.txt_chat.delete("1.0", "end")
-        self.txt_chat.insert("1.0", "[Sistema]: Chat vaciado. Esperando nuevos comentarios...\n\n")
-        self.txt_chat.configure(state="disabled")
+        # Usar nuevo panel de chat
+        self.chat_panel.clear_chat()
 
         self.txt_rag_log.configure(state="normal")
         self.txt_rag_log.delete("1.0", "end")

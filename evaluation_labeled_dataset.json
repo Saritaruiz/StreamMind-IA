@@ -1,0 +1,589 @@
+{
+  "metadata": {
+    "dataset_name": "StreamMind Real Chat Dataset (Evaluation)",
+    "version": "1.0",
+    "created": "2026-05-26T08:54:32.046011",
+    "total_comments": 50,
+    "real_human_comments": 50,
+    "generated_comments": 0,
+    "sources": [
+      "rubius",
+      "ibai",
+      "auronplay"
+    ],
+    "categories": [
+      "gaming",
+      "variety_gaming"
+    ],
+    "stats": {
+      "avg_comment_length": 15.78,
+      "min_comment_length": 2,
+      "max_comment_length": 93,
+      "unique_users": 41,
+      "unique_channels": 3
+    },
+    "usage": {
+      "purpose": "LLM evaluation - Humanness Score calculation",
+      "labeling_method": "Extracted from real Twitch chat",
+      "quality_criteria": [
+        "No spam/bots",
+        "2-250 characters (relajado para capturar 'xd', 'lol')",
+        "Max 1 URL per comment",
+        "Diverse by category and user"
+      ]
+    }
+  },
+  "total_comments": 50,
+  "comments": [
+    {
+      "user": "purryez",
+      "comment": "LO",
+      "timestamp": "2026-05-25T14:42:19.149063",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "paolitaa007",
+      "comment": "JU",
+      "timestamp": "2026-05-25T14:41:45.169149",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "cesardiaz507",
+      "comment": "age",
+      "timestamp": "2026-05-25T14:27:11.743523",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "krisch_bbh",
+      "comment": "POPI",
+      "timestamp": "2026-05-25T14:27:11.954441",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "merussmeru",
+      "comment": "Los time attack son los más superiores",
+      "timestamp": "2026-05-25T14:30:21.704389",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "lala_notz",
+      "comment": "rubbTuerk rubbTuerk rubbTuerk rubbTuerk rubbTuerk",
+      "timestamp": "2026-05-25T14:27:12.154510",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "d0u503",
+      "comment": "me vengo",
+      "timestamp": "2026-05-25T14:27:11.548755",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "trymindx",
+      "comment": "yapping",
+      "timestamp": "2026-05-25T14:26:07.317363",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "ikeervaporeon44",
+      "comment": "o7",
+      "timestamp": "2026-05-25T14:26:25.940868",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "hlewhatmeou",
+      "comment": "chat Rubius oye",
+      "timestamp": "2026-05-25T14:42:22.029218",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "trymindx",
+      "comment": "mhm",
+      "timestamp": "2026-05-25T14:36:12.013988",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "minsitooo",
+      "comment": "rubbHeCrazy rubbHeCrazy",
+      "timestamp": "2026-05-25T14:35:50.808058",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "isabrabos",
+      "comment": "dasi",
+      "timestamp": "2026-05-25T14:24:42.331755",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "benhurislost_7",
+      "comment": "otra ruleta",
+      "timestamp": "2026-05-25T14:40:35.680854",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "midsinquirk",
+      "comment": "Clueless",
+      "timestamp": "2026-05-25T14:24:19.161554",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "miyas__",
+      "comment": "YaAllaH  ANELE 🙏",
+      "timestamp": "2026-05-25T14:28:27.601499",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "trufadv",
+      "comment": "XDDDDDDDD",
+      "timestamp": "2026-05-25T14:41:30.061319",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "hambo_hax",
+      "comment": "xd",
+      "timestamp": "2026-05-25T14:42:15.817241",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "dulcevannez",
+      "comment": "el conductor es el goty",
+      "timestamp": "2026-05-25T14:25:21.244052",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "andrea_tomatito",
+      "comment": "LOL",
+      "timestamp": "2026-05-25T14:25:18.659696",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "marcod23_",
+      "comment": "suS vp",
+      "timestamp": "2026-05-25T14:35:58.716765",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "serrano_si",
+      "comment": "@rubius prueba battle roye",
+      "timestamp": "2026-05-25T14:36:21.420865",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "ryuuct",
+      "comment": "Pognt",
+      "timestamp": "2026-05-25T14:29:24.359988",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "andrea_tomatito",
+      "comment": "adios",
+      "timestamp": "2026-05-25T14:26:33.101311",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "manolito2435",
+      "comment": "ONEMORE ͏",
+      "timestamp": "2026-05-25T14:36:38.000030",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "sempermage",
+      "comment": "Tienes nexo abierto, 7 k arriba, te mantan a 2 y pierdes?? qué   mecánica de juego es esa????",
+      "timestamp": "2026-05-25T14:24:11.305659",
+      "channel": "ibai",
+      "category": "variety_gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "santukon",
+      "comment": "Pues q te tanquean torre se lanzan a por los 2 q quedan vivos y listo",
+      "timestamp": "2026-05-25T14:24:52.819129",
+      "channel": "ibai",
+      "category": "variety_gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "xceltadark_",
+      "comment": "WeDidThat WeDidThat WeDidThat",
+      "timestamp": "2026-05-25T14:41:13.053580",
+      "channel": "auronplay",
+      "category": "variety_gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "benjinji_",
+      "comment": "Los que saben manejar estuvieron años jugando al gta online xd",
+      "timestamp": "2026-05-25T14:33:58.506682",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "martin3047",
+      "comment": "huh ͏",
+      "timestamp": "2026-05-25T14:25:00.968542",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "manolito2435",
+      "comment": "ONEMORE ͏",
+      "timestamp": "2026-05-25T14:36:43.616535",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "trillaa95",
+      "comment": "peepoPoint",
+      "timestamp": "2026-05-25T14:41:42.648028",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "elbichosiuu__bs",
+      "comment": "Ahora con volante rub",
+      "timestamp": "2026-05-25T14:34:58.575103",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "yago_2xd",
+      "comment": "mhm",
+      "timestamp": "2026-05-25T14:38:01.247991",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "grossiman22",
+      "comment": "La tacoma da mucho asco",
+      "timestamp": "2026-05-25T14:34:25.489535",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "carrasvalencia",
+      "comment": "rubbKEKW rubbKEKW rubbKEKW",
+      "timestamp": "2026-05-25T14:42:19.758242",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "dulcevannez",
+      "comment": "ola yt",
+      "timestamp": "2026-05-25T14:35:58.716765",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "razor_jk",
+      "comment": "no tocan pasto",
+      "timestamp": "2026-05-25T14:39:14.782299",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "scoupson",
+      "comment": "rubbSitR",
+      "timestamp": "2026-05-25T14:37:45.333537",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "lala_notz",
+      "comment": "o7",
+      "timestamp": "2026-05-25T14:40:34.142811",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "razor_jk",
+      "comment": "LO",
+      "timestamp": "2026-05-25T14:27:51.774368",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "trufadv",
+      "comment": "XDDDDDDD",
+      "timestamp": "2026-05-25T14:42:17.148304",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "trymindx",
+      "comment": "YEP",
+      "timestamp": "2026-05-25T14:29:38.575531",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "jraphaelgs",
+      "comment": "Clueless",
+      "timestamp": "2026-05-25T14:39:18.883763",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "antonio7_95",
+      "comment": "nissan",
+      "timestamp": "2026-05-25T14:37:06.076404",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "xb0ykka",
+      "comment": "el issetta es igual que el peel peroi en bmw",
+      "timestamp": "2026-05-25T14:24:39.782909",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "jorgegeorge98",
+      "comment": "POPI",
+      "timestamp": "2026-05-25T14:24:48.909868",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "leonsus",
+      "comment": "BroBalt",
+      "timestamp": "2026-05-25T14:26:31.133581",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "manolito2435",
+      "comment": "es hermosa WOAH @Rubius ͏",
+      "timestamp": "2026-05-25T14:28:21.710335",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    },
+    {
+      "user": "manuelctz_gd",
+      "comment": "rubbTuerk rubbTuerk",
+      "timestamp": "2026-05-25T14:27:24.766535",
+      "channel": "rubius",
+      "category": "gaming",
+      "es_humano": 1,
+      "is_real": true,
+      "source": "real_twitch_user",
+      "quality_score": 5
+    }
+  ]
+}
