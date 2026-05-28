@@ -1,259 +1,158 @@
 # StreamMind-IA
 
-Sistema inteligente de generación de comentarios de chat con IA para aplicaciones de streaming.
+**Sistema inteligente de generación de comentarios de chat con IA para streaming**
 
-## Descripción
+Genera comentarios tan realistas que son indistinguibles de los que escriben humanos.
 
-StreamMind-IA es un pipeline completo que:
-- 🎤 **Transcribe** audio en tiempo real (Whisper)
-- 🧠 **Recupera contexto** de conversaciones anteriores (FAISS RAG)
-- 💬 **Genera comentarios** realistas con 3 personalidades distintas (LLM)
-- 📊 **Evalúa** automáticamente la calidad de comentarios
-- 👥 **Tests ciegos** para validar indistinguibilidad
+---
 
-## Instalación Rápida
+## 🎯 ¿Qué hace?
+
+StreamMind-IA es un pipeline de 5 fases que:
+
+1. 🎤 **Escucha** → Transcribe audio a texto (Whisper)
+2. 🧠 **Comprende** → Busca contexto en historial (FAISS RAG)
+3. 💬 **Genera** → Crea 3 comentarios únicos (LLM - NVIDIA NIM)
+4. 🎨 **Muestra** → Visualiza en chat elegante
+5. 📊 **Evalúa** → Califica realismo automático
+
+---
+
+## ⚡ Instalación Rápida
 
 ### Requisitos
 - Python 3.9+
 - 8GB RAM (16GB recomendado)
-- GPU opcional (CUDA/cuDNN)
+- GPU opcional (CUDA acelera)
 
 ### Setup
 ```bash
-# Clonar repositorio
-git clone https://github.com/Saritaruiz/StreamMind-IA.git
+# 1. Clonar/descargar repositorio
 cd StreamMind-IA
 
-# Instalar dependencias
+# 2. Crear entorno virtual
+python -m venv .venv
+.venv\Scripts\activate  # Windows
+
+# 3. Instalar dependencias
 pip install -r requirements_stt.txt
 
-# Ejecutar (primero configura NVIDIA_API_KEY si deseas LLM con API)
+# 4. Ejecutar
 python stt_gui.py
 ```
 
-## Uso Rápido
-
-### Opción 1: GUI Premium (Recomendado)
+### Configuración Opcional
 ```bash
-python stt_gui_premium.py
+# Si tienes API key de NVIDIA para mejor LLM:
+set NVIDIA_API_KEY=tu_key_aqui
 ```
-Nueva interfaz futurista y elegante con:
-- Dashboard moderno inspirado en NVIDIA/OpenAI
-- Paleta de colores premium (sapphire + dorado)
-- Glassmorphism y glow azul elegante
-- Visualización completa de los 5 módulos
-- Diseño cinematográfico sofisticado
-
-Ver [DESIGN.md](DESIGN.md) para detalles visuales completos.
-
-### Opción 2: GUI Clásica
-```bash
-python stt_gui.py
-```
-Interfaz original con:
-- Grabación de audio en vivo
-- Transcripción automática
-- Generación de comentarios
-- Chat interactivo
-
-### Opción 3: Test de Evaluación
-```bash
-python demo_fase5.py
-```
-- Demostración del evaluador automático
-- 100 comentarios (50 reales + 50 generados)
-- Tasa de error y análisis
-
-### Opción 3: Test Ciego Interactivo
-```bash
-python blind_test_interface.py
-```
-- Interface para evaluadores humanos
-- Determina si IA es indistinguible
-- Salva resultados en JSON
-
-## Características Principales
-
-### � Interfaz Visual Premium (Nuevo)
-
-**StreamMind IA ahora con diseño futurista y elegante:**
-
-Paleta de colores profesional:
-- **Sapphire** (#3C507D): Azul profundo para botones
-- **Royal Blue** (#112250): Fondo oscuro
-- **Quicksand** (#E0C58F): Dorado elegante
-- **Swan Wing** (#F5F0E9): Texto claro
-
-Características visuales:
-- Glassmorphism sutil con bordes luminosos
-- Dark mode minimalista y sofisticado
-- Tipografía futurista (Segoe UI)
-- Sombras suaves y glow azul
-- Animaciones smooth
-- Diseño inspirado en dashboards de IA (NVIDIA, OpenAI)
-
-Dashboard con 5 módulos en tiempo real:
-- **STT Terminal**: Transcripción con cursor parpadeante
-- **Chat IA**: 3 bots con colores distintivos
-- **RAG Memory**: Visualización contextual
-- **Analytics**: Humanness Score y métricas
-- **Sidebar**: Configuración completa
-
-Ver [DESIGN.md](DESIGN.md) para guía visual detallada.
-
-### �🎯 5 Fases Integradas
-
-**Fase 1: Recolección de Datos**
-- Scraper Twitch IRC
-- Análisis Exploratorio (EDA)
-- Dataset etiquetado
-
-**Fase 2: RAG (Recuperación Contextual)**
-- FAISS vector store
-- Embeddings multiidioma
-- Persistencia automática
-
-**Fase 3: Generación LLM**
-- 3 personalidades (HypeBot, CritiBot, LurkerBot)
-- 6 categorías de stream
-- Delays realistas
-
-**Fase 4: UI Mejorada**
-- Burbujas de chat animadas
-- Códigos de color por bot
-- Contadores de delay
-
-**Fase 5: Evaluación**
-- Sistema de rúbrica 5 criterios
-- Tests ciegos para humanos
-- Métricas de éxito (>30% error rate)
-
-### Personalidades
-
-| Bot | Estilo | Color | Emote | Delay |
-|-----|--------|-------|-------|-------|
-| **HypeBot** | Hype/Competitivo | Rojo | [HYPE] | 2s |
-| **CritiBot** | Analítico | Verde | [CRITI] | 3s |
-| **LurkerBot** | Misterioso | Púrpura | [LURK] | 4s |
-
-### Categorías Soportadas
-- Gaming
-- Esports
-- Creative
-- Just Chatting
-- Variety Gaming
-- IRL
-
-## Documentación Técnica
-
-Ver [DOCUMENTATION.md](DOCUMENTATION.md) para:
-- Arquitectura detallada
-- API reference
-- Configuración avanzada
-- Troubleshooting
-
-## Resultados
-
-### Dataset Real (1,570 mensajes de Twitch)
-```
-Usuarios únicos: 335
-Longitud promedio: 14 caracteres
-Longitud mediana: 8 caracteres
-Jerga dominante: xd (91), lol (27), kek (14)
-```
-
-### Evaluación Automática
-```
-Humanness Score (Real): 65.3/100
-Humanness Score (Generado): 62.4/100
-Tasa de error: 58%
-Veredicto: INDISTINGUIBLES ✓
-```
-
-## Estructura de Archivos
-
-```
-StreamMind-IA/
-├── stt_gui.py                    # Interface principal
-├── stream_rag_advanced.py        # Sistema RAG
-├── stream_llm_advanced.py        # Generador LLM
-├── stream_chat_ui.py            # Panel de chat
-├── llm_as_judge.py              # Evaluador automático
-├── blind_test_interface.py      # Test ciego
-├── twitch_irc_scraper.py        # Recolector de datos
-├── eda_analysis.py              # Análisis exploratorio
-├── labeled_dataset.py           # Dataset etiquetado
-├── demo_fase5.py                # Demo completo
-├── requirements_stt.txt         # Dependencias
-├── DOCUMENTATION.md             # Docs técnicas
-├── README.md                    # Este archivo
-└── rag_indexes/                 # Índices FAISS
-```
-
-## Configuración
-
-### Variables de Entorno
-```bash
-export NVIDIA_API_KEY="tu_clave_aqui"
-```
-
-### Modelos Usados
-- **STT**: faster-whisper (base/small/medium/large)
-- **Embeddings**: sentence-transformers/distiluse-base-multilingual-cased-v2
-- **LLM**: google/gemma-3n-e2b-it (NVIDIA NIM)
-
-## Troubleshooting
-
-### Error: "No module named 'faiss'"
-```bash
-pip install faiss-cpu
-```
-
-### Error: "Model download timeout"
-```bash
-huggingface-cli download sentence-transformers/distiluse-base-multilingual-cased-v2
-```
-
-### Error: Audio no funciona
-```bash
-pip install sounddevice
-python -c "import sounddevice; print(sounddevice.query_devices())"
-```
-
-## Métricas de Éxito
-
-Meta: **>30% tasa de error** (humanos engañados por IA)
-
-Resultados actuales: **58%** ✓ EXITOSO
-
-## Próximas Mejoras
-
-- Integración con OBS/Streamlabs
-- Fine-tuning con datos específicos del streamer
-- Soporte multiidioma expandido
-- Dashboard de analytics
-- Persistencia de histórico
-- Overlay para streaming
-
-## Licencia
-
-MIT License - Ver LICENSE para detalles
-
-## Autor
-
-Sarita Ruiz
-- GitHub: [@Saritaruiz](https://github.com/Saritaruiz)
-
-## Soporte
-
-Para problemas:
-1. Revisar [DOCUMENTATION.md](DOCUMENTATION.md)
-2. Consultar logs en terminal
-3. Reportar en Issues
 
 ---
 
-**Estado**: Producción lista
-**Versión**: 2.0
-**Última actualización**: Mayo 2026
+## 🚀 Uso
 
+### Interfaz Principal
+```bash
+python stt_gui.py
+```
+
+Características:
+- Captura audio del micrófono
+- Transcripción en tiempo real
+- Generación de comentarios con contexto
+- Chat interactivo con 3 bots (HypeBot, CritiBot, LurkerBot)
+- Evaluación automática de realismo
+
+### Test Ciego (Validación Humana)
+```bash
+python blind_test_interface.py
+```
+
+Permite a humanos determinar si comentarios son IA o reales.
+
+---
+
+## 📊 Componentes
+
+| Módulo | Descripción |
+|--------|-------------|
+| `stt_gui.py` | Interfaz gráfica principal |
+| `stt_whisper.py` | Transcripción de voz (STT) |
+| `stream_rag_advanced.py` | Búsqueda contextual (RAG) |
+| `stream_llm_advanced.py` | Generación de comentarios (LLM) |
+| `llm_as_judge.py` | Evaluador automático |
+| `blind_test_interface.py` | Tests ciegos interactivos |
+| `utils/` | Utilidades (análisis, datasets) |
+
+---
+
+## 🔧 Estructura de Archivos
+
+```
+StreamMind-IA/
+├── stt_gui.py                  # GUI principal
+├── stt_whisper.py              # STT engine
+├── stream_rag_advanced.py      # Sistema RAG
+├── stream_llm_advanced.py      # Generador LLM
+├── llm_as_judge.py             # Evaluador
+├── blind_test_interface.py     # Tests ciegos
+├── stream_chat_ui.py           # Componente chat
+│
+├── utils/                      # Utilidades
+│   ├── labeled_dataset.py
+│   ├── eda_analysis.py
+│   └── __init__.py
+│
+├── rag_indexes/                # Índices FAISS
+├── requirements_stt.txt        # Dependencias
+├── README.md                   # Este archivo
+├── DOCUMENTATION.md            # Docs técnicas
+└── CHANGELOG.md                # Historial
+```
+
+---
+
+## 📚 Los 3 Bots
+
+| Bot | Personalidad | Ejemplo |
+|-----|-------------|---------|
+| **HypeBot** 🔴 | Entusiasta, energético | "LET'S GOO!!! Increíble 🔥" |
+| **CritiBot** 💚 | Analítico, inteligente | "Jugada bien ejecutada, timing ajustado" |
+| **LurkerBot** 💜 | Misterioso, observador | "...eso estuvo bien" |
+
+---
+
+## 📊 Requisitos del Sistema
+
+- **CPU**: 4+ núcleos
+- **RAM**: 8GB mínimo (16GB recomendado)
+- **Almacen**: 5GB (modelos + índices)
+- **GPU**: Opcional (CUDA/cuDNN)
+- **Micrófono**: Funcional
+
+---
+
+## 🎓 Para Aprender Más
+
+Ver `DOCUMENTATION.md` para documentación técnica completa incluyendo:
+- Arquitectura del sistema
+- API de cada módulo
+- Configuración avanzada
+- Troubleshooting
+
+---
+
+## 📈 Objetivo
+
+Generar comentarios que:
+- ✅ Parezcan escritos por humanos reales
+- ✅ Sean contextualmente relevantes
+- ✅ Tengan personalidades consistentes
+- ✅ Engañen a humanos (>30% de error)
+- ✅ Pasen evaluación automática (>85 score)
+
+---
+
+**Última actualización**: Mayo 2026
+**Versión**: 2.0 Simplificada
+**Estado**: ✅ Funcional y listo para usar
