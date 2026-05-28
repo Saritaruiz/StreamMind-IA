@@ -17,9 +17,9 @@ from datetime import datetime
 
 # ─── Configuración ───────────────────────────────────────────────────────────
 
-INPUT_FILE = "twitch_raw_data.csv"
-OUTPUT_FILE = "evaluation_labeled_dataset.csv"
-OUTPUT_JSON = "evaluation_labeled_dataset.json"
+INPUT_FILE = "data/twitch_raw_data.csv"
+OUTPUT_FILE = "data/evaluation_labeled_dataset.csv"
+OUTPUT_JSON = "data/evaluation_labeled_dataset.json"
 
 SAMPLE_SIZE = 50  # 50 comentarios reales etiquetados
 

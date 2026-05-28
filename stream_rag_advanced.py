@@ -41,7 +41,7 @@ class AdvancedStreamRAG:
     def __init__(
         self,
         model_name: str = "sentence-transformers/distiluse-base-multilingual-cased-v2",
-        index_dir: str = "rag_indexes",
+        index_dir: str = "data/rag_indexes",
         max_documents: int = 10000,
         dimension: int = 512
     ):

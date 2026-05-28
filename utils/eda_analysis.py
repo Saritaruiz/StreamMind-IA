@@ -24,7 +24,7 @@ import sys
 
 # ─── Configuración ───────────────────────────────────────────────────────────
 
-INPUT_FILE = "twitch_raw_data.csv"
+INPUT_FILE = "data/twitch_raw_data.csv"
 OUTPUT_DIR = "eda_output"
 
 # Emotes y jerga común en Twitch
@@ -290,11 +290,22 @@ def print_report_summary(report):
     
     print("\n" + "=" * 80)
 
-def save_report_json(report, filename="eda_report.json"):
+class NpEncoder(json.JSONEncoder):
+    def default(self, obj):
+        import numpy as np
+        if isinstance(obj, (np.integer, np.int64)):
+            return int(obj)
+        elif isinstance(obj, (np.floating, np.float64)):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return super(NpEncoder, self).default(obj)
+
+def save_report_json(report, filename="data/eda_report.json"):
     """Guarda reporte como JSON"""
     try:
         with open(filename, "w", encoding="utf-8") as f:
-            json.dump(report, f, indent=2, ensure_ascii=False)
+            json.dump(report, f, indent=2, ensure_ascii=False, cls=NpEncoder)
         print(f"[✓] Reporte JSON guardado: {filename}")
         return True
     except Exception as e:

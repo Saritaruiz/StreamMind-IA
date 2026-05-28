@@ -1,0 +1,23 @@
+# StreamMind-IA — Dependencias del Proyecto Completo
+# Instalar con: pip install -r requirements.txt
+
+# --- Interfaz Gráfica (GUI) ---
+customtkinter>=5.2.0
+pillow>=10.0.0
+opencv-python>=4.8.0
+
+# --- Speech-to-Text (STT) ---
+faster-whisper>=0.10.0
+openai-whisper
+sounddevice>=0.4.6
+
+# --- RAG & Vector Search ---
+faiss-cpu>=1.7.4
+sentence-transformers>=2.2.2
+
+# --- Procesamiento de Datos ---
+pandas>=2.0.0
+numpy>=1.24.0
+
+# --- Deep Learning Backend ---
+torch>=2.0.0

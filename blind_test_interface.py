@@ -506,7 +506,7 @@ Los comentarios generados son {'INDISTINGUIBLES' if success else 'DISTINGUIBLES'
     def _save_results(self, results: Dict):
         """Guarda los resultados a un archivo JSON."""
         try:
-            filename = f"blind_test_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+            filename = f"data/blind_test_results_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
             filepath = Path(filename)
             
             with open(filepath, 'w', encoding='utf-8') as f:

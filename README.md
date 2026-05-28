@@ -35,7 +35,7 @@ python -m venv .venv
 .venv\Scripts\activate  # Windows
 
 # 3. Instalar dependencias
-pip install -r requirements_stt.txt
+pip install -r requirements.txt
 
 # 4. Ejecutar
 python stt_gui.py
@@ -98,16 +98,26 @@ StreamMind-IA/
 ├── blind_test_interface.py     # Tests ciegos
 ├── stream_chat_ui.py           # Componente chat
 │
-├── utils/                      # Utilidades
-│   ├── labeled_dataset.py
-│   ├── eda_analysis.py
+├── data/                       # Datos y conjuntos del dataset
+│   ├── twitch_raw_data.csv            # Mensajes Twitch IRC crudos
+│   ├── evaluation_labeled_dataset.csv # Dataset etiquetado (CSV)
+│   ├── evaluation_labeled_dataset.json# Dataset etiquetado (JSON)
+│   ├── eda_report.json                # Reporte del EDA
+│   └── rag_indexes/                   # Índices FAISS persistidos
+│
+├── docs/                       # Documentación académica y técnica
+│   ├── DOCUMENTATION.md               # Documentación de APIs
+│   ├── PROJECT_ANALYSIS.md            # Análisis inicial del sistema
+│   ├── VIDEO_GUION_STORYTELLING.md    # Guión de la presentación
+│   └── STREAMIND_EXPLICACION.ipynb    # Explicación interactiva (Notebook)
+│
+├── utils/                      # Utilidades y scripts auxiliares
+│   ├── labeled_dataset.py             # Generador del dataset
+│   ├── eda_analysis.py                # Analizador EDA
 │   └── __init__.py
 │
-├── rag_indexes/                # Índices FAISS
-├── requirements_stt.txt        # Dependencias
-├── README.md                   # Este archivo
-├── DOCUMENTATION.md            # Docs técnicas
-└── CHANGELOG.md                # Historial
+├── requirements.txt            # Dependencias del proyecto
+└── README.md                   # Este archivo
 ```
 
 ---
