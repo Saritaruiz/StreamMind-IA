@@ -26,7 +26,6 @@ from datetime import datetime
 
 import numpy as np
 import sounddevice as sd
-from faster_whisper import WhisperModel
 import torch
 import customtkinter as ctk
 
@@ -113,6 +112,7 @@ class WhisperSTTEngine:
         """Carga el modelo de Faster-Whisper de fondo."""
         self.status_queue.put(("loading", f"Cargando whisper-{model_size} ({self.device.upper()})..."))
         try:
+            from faster_whisper import WhisperModel
             self.model_size = model_size
             compute_type = "float16" if self.device == "cuda" else "int8"
             self.model = WhisperModel(self.model_size, device=self.device, compute_type=compute_type)
@@ -384,6 +384,7 @@ class StreamMindSTTApp(ctk.CTk):
         self.camera_active = False
         self.camera_index = 0
         self.camera_thread = None
+        self.camera_devices = {}
 
         # Crear Interfaz
         self._create_sidebar()
@@ -440,21 +441,44 @@ class StreamMindSTTApp(ctk.CTk):
             self.mic_devices = {"Predeterminado": None}
 
     def get_cameras(self):
-        """Detecta las cámaras físicas reales conectadas al sistema probando índices del 0 al 4."""
+        """Detecta las cámaras físicas reales conectadas al sistema usando pygrabber si está disponible,
+        con fallback a la enumeración OpenCV estándar."""
         cameras = []
+        self.camera_devices = {}
+        
+        # 1. Intentar usar pygrabber para obtener los nombres reales de los dispositivos
         try:
-            import cv2
-            # Probar los primeros 5 índices de cámara de manera rápida y silenciosa
-            for i in range(5):
-                cap = cv2.VideoCapture(i, cv2.CAP_DSHOW if sys.platform == "win32" else None)
-                if cap.isOpened():
-                    cameras.append(f"Cámara {i}")
-                    cap.release()
+            from pygrabber.dshow_graph import FilterGraph
+            graph = FilterGraph()
+            devices = graph.get_input_devices()
+            if devices:
+                for idx, name in enumerate(devices):
+                    display_name = f"{name} ({idx})"
+                    self.camera_devices[display_name] = idx
+                    cameras.append(display_name)
         except Exception:
             pass
             
+        # 2. Fallback a OpenCV estándar si pygrabber falla o no encuentra nada
         if not cameras:
-            cameras = ["Cámara 0 (Simulada)"]
+            try:
+                import cv2
+                for idx in range(5):
+                    cap = cv2.VideoCapture(idx, cv2.CAP_DSHOW if sys.platform == "win32" else None)
+                    if cap.isOpened():
+                        display_name = f"Cámara {idx}"
+                        self.camera_devices[display_name] = idx
+                        cameras.append(display_name)
+                        cap.release()
+            except Exception:
+                pass
+                
+        # 3. Fallback final simulado
+        if not cameras:
+            display_name = "Cámara 0 (Simulada)"
+            self.camera_devices[display_name] = 0
+            cameras = [display_name]
+            
         return cameras
 
     def _create_sidebar(self):
@@ -1086,12 +1110,9 @@ class StreamMindSTTApp(ctk.CTk):
     # ── Cámara de Video (Real con OpenCV / Simulada con PIL) ──
 
     def change_camera_device(self, val):
-        try:
-            parts = val.split(" ")
-            idx = int(parts[1])
-            self.camera_index = idx
-        except Exception:
-            self.camera_index = 0
+        """Actualiza la cámara activa seleccionada."""
+        idx = self.camera_devices.get(val, 0)
+        self.camera_index = idx
             
         if self.camera_active:
             # Si ya está activa, reiniciar el feed con el nuevo índice
